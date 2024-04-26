@@ -1,0 +1,38 @@
+#######################################
+# Syntax Coloring Map For Stack
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Stack	KEYWORD1
+StackExt	KEYWORD1
+StackT	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+setBuffer	KEYWORD2
+push	KEYWORD2
+pop	KEYWORD2
+peek	KEYWORD2
+shift	KEYWORD2
+unshift	KEYWORD2
+unpeek	KEYWORD2
+remove	KEYWORD2
+insert	KEYWORD2
+fill	KEYWORD2
+init	KEYWORD2
+concat	KEYWORD2
+clear	KEYWORD2
+canAdd	KEYWORD2
+length	KEYWORD2
+capacity	KEYWORD2
+get	KEYWORD2
+reserve	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
