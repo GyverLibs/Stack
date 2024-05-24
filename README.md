@@ -147,6 +147,7 @@ for (int i = 0; i < st4.length(); i++) Serial.println(st4[i]);  // 1234.56/3.14/
 
 ## Версии
 - v1.0
+- v1.0.1 - добавлен move конструктор и операторы
 
 <a id="install"></a>
 
