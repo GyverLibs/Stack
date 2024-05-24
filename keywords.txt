@@ -9,6 +9,9 @@
 Stack	KEYWORD1
 StackExt	KEYWORD1
 StackT	KEYWORD1
+StackUniqExt	KEYWORD1
+StackUniqT	KEYWORD1
+StackUniq	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
@@ -32,6 +35,10 @@ length	KEYWORD2
 capacity	KEYWORD2
 get	KEYWORD2
 reserve	KEYWORD2
+
+removeByVal	KEYWORD2
+includes	KEYWORD2
+indexOf	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)

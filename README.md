@@ -29,24 +29,24 @@
 // внешний буфер
 StackExt<typename T>();
 StackExt<typename T>(T* arr, size_t capacity, size_t length = 0);
+StackUniqExt<typename T>();
+StackUniqExt<typename T>(T* arr, size_t capacity, size_t length = 0);
 
 // динамический буфер
 Stack<typename T>(size_t size = 0);
+StackUniq<typename T>(size_t size = 0);
 
 // статический буфер
 StackT<typename T, size_t size>();
+StackUniqT<typename T, size_t size>();
+
+// Uniq - массив с уникальными данными, при добавлении проверяется наличие элемента
 ```
 
 <a id="usage"></a>
 
 ## Использование
 ```cpp
-// подключить буфер (только для StackExt)
-void setBuffer(T* arr, size_t capacity, size_t length = 0);
-
-// зарезервировать память в кол-ве элементов (только для Stack)
-bool reserve(size_t size);
-
 // добавить в конец
 bool push(const T& val);
 bool operator+=(const T& val);
@@ -100,8 +100,36 @@ T& get(int idx);
 // получить элемент под индексом. Отрицательный - с конца
 T& operator[](int idx);
 
-// указатель на масств
-const T* ptr();
+// доступ для ручного взаимодействия
+T* _buf;
+size_t _len;
+```
+
+### Дополнительно
+```cpp
+// только для StackExt и StackUniqExt
+// ==================================
+
+// подключить буфер 
+void setBuffer(T* arr, size_t capacity, size_t length = 0);
+
+// только для Stack и StackUniq
+// ==================================
+
+// зарезервировать память в кол-ве элементов
+bool reserve(size_t size);
+
+// только для *Uniq
+// ==================================
+
+// позиция элемента (-1 если не найден)
+int indexOf(const T& val);
+
+// содержит элемент
+bool includes(const T& val);
+
+// удалить по значению (true если элемента нет)
+bool removeByVal(const T& val);
 ```
 
 <a id="example"></a>
@@ -112,7 +140,7 @@ const T* ptr();
 Stack<char> st1;
 st1.push('a');
 st1.push('b');
-st1.push('c');
+st1 += 'c';
 while (st1.length()) Serial.print(st1.pop()); // cba
 Serial.println();
 
@@ -147,7 +175,7 @@ for (int i = 0; i < st4.length(); i++) Serial.println(st4[i]);  // 1234.56/3.14/
 
 ## Версии
 - v1.0
-- v1.0.1 - добавлен move конструктор и операторы
+- v1.0.1 - добавлен move конструктор и move операторы. Добавлен режим уникального стека
 
 <a id="install"></a>
 

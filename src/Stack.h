@@ -34,6 +34,7 @@ class StackExt {
 
     // добавить в конец
     bool push(const T& val) {
+        if (!canAdd(val)) return 0;
         if (!_fit(_len + 1)) return 0;
         _buf[_len++] = val;
         return 1;
@@ -56,6 +57,7 @@ class StackExt {
 
     // добавить в начало
     bool shift(const T& val) {
+        if (!canAdd(val)) return 0;
         if (!_fit(_len + 1)) return 0;
         memmove((void*)(_buf + 1), (void*)(_buf), _len * sizeof(T));
         _buf[0] = val;
@@ -89,6 +91,7 @@ class StackExt {
 
     // вставить элемент на индекс (допускается индекс length())
     bool insert(int idx, const T& val) {
+        if (!canAdd(val)) return 0;
         if (idx > (int)_len || idx < -(int)_len || !_fit(_len + 1)) return 0;
 
         if (idx < 0) idx += _len;
@@ -160,19 +163,15 @@ class StackExt {
         return get(idx);
     }
 
-    operator bool() {
+    operator bool() const {
         return _buf;
     }
 
-    // указатель на масств
-    const T* ptr() const {
-        return _buf;
-    }
+    T* _buf = nullptr;
+    size_t _len = 0;
 
    protected:
-    T* _buf = nullptr;
     size_t _cap = 0;
-    size_t _len = 0;
 
     bool _fit(size_t size) {
         return (size <= _cap || reserve(size)) && _buf;
@@ -180,16 +179,18 @@ class StackExt {
     virtual bool reserve(size_t size) {
         return 0;
     }
+    virtual bool canAdd(const T& val) {
+        return 1;
+    }
 };
 
 // Static Stack
 template <typename T, size_t size>
 class StackT : public StackExt<T> {
    public:
-    StackT() : StackExt<T>(arr, size) {}
+    StackT() : StackExt<T>(buffer, size) {}
 
-   protected:
-    T arr[size];
+    T buffer[size];
 
    private:
     using StackExt<T>::setBuffer;
@@ -289,4 +290,121 @@ class Stack : public StackExt<T> {
 
    private:
     using StackExt<T>::setBuffer;
+};
+
+// External Static Stack Uniq
+template <typename T>
+class StackUniqExt : public StackExt<T> {
+   public:
+    using StackExt<T>::StackExt;
+
+    // позиция элемента (-1 если не найден)
+    int indexOf(const T& val) {
+        for (size_t i = 0; i < _len; i++) {
+            if (_buf[i] == val) return i;
+        }
+        return -1;
+    }
+
+    // содержит элемент
+    bool includes(const T& val) {
+        return indexOf(val) != -1;
+    }
+
+    // удалить по значению (true если элемента нет)
+    bool removeByVal(const T& val) {
+        int i = indexOf(val);
+        return (i >= 0) ? StackExt<T>::remove(i) : true;
+    }
+
+    using StackExt<T>::_len;
+    using StackExt<T>::_buf;
+
+   private:
+    using StackExt<T>::concat;
+    using StackExt<T>::fill;
+    using StackExt<T>::init;
+
+   protected:
+    bool canAdd(const T& val) {
+        return !includes(val);
+    }
+};
+
+// Static Stack Uniq
+template <typename T, size_t size>
+class StackUniqT : public StackT<T, size> {
+   public:
+    using StackT<T, size>::StackT;
+
+    // позиция элемента (-1 если не найден)
+    int indexOf(const T& val) {
+        for (size_t i = 0; i < _len; i++) {
+            if (_buf[i] == val) return i;
+        }
+        return -1;
+    }
+
+    // содержит элемент
+    bool includes(const T& val) {
+        return indexOf(val) != -1;
+    }
+
+    // удалить по значению (true если элемента нет)
+    bool removeByVal(const T& val) {
+        int i = indexOf(val);
+        return (i >= 0) ? StackExt<T>::remove(i) : true;
+    }
+
+    using StackExt<T>::_len;
+    using StackExt<T>::_buf;
+
+   private:
+    using StackExt<T>::concat;
+    using StackExt<T>::fill;
+    using StackExt<T>::init;
+
+   protected:
+    bool canAdd(const T& val) {
+        return !includes(val);
+    }
+};
+
+// Dynamic Stack Uniq
+template <typename T>
+class StackUniq : public Stack<T> {
+   public:
+    using Stack<T>::Stack;
+
+    // позиция элемента (-1 если не найден)
+    int indexOf(const T& val) {
+        for (size_t i = 0; i < _len; i++) {
+            if (_buf[i] == val) return i;
+        }
+        return -1;
+    }
+
+    // содержит элемент
+    bool includes(const T& val) {
+        return indexOf(val) != -1;
+    }
+
+    // удалить по значению (true если элемента нет)
+    bool removeByVal(const T& val) {
+        int i = indexOf(val);
+        return (i >= 0) ? StackExt<T>::remove(i) : true;
+    }
+
+    using StackExt<T>::_len;
+    using StackExt<T>::_buf;
+
+   private:
+    using StackExt<T>::concat;
+    using StackExt<T>::fill;
+    using StackExt<T>::init;
+
+   protected:
+    bool canAdd(const T& val) {
+        return !includes(val);
+    }
 };
