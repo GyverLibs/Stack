@@ -274,7 +274,7 @@ class Stack : public StackExt<T> {
             return;
         }
 
-        memcpy((void*)_buf, (void*)st._buf, st._len);
+        memcpy((void*)_buf, (void*)st._buf, st._len * sizeof(T));
         _len = st._len;
     }
 
