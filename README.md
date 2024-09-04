@@ -6,6 +6,9 @@
 
 [![Foo](https://img.shields.io/badge/ПОДПИСАТЬСЯ-НА%20ОБНОВЛЕНИЯ-brightgreen.svg?style=social&logo=telegram&color=blue)](https://t.me/GyverLibs)
 
+|⚠️⚠️⚠️<br>**Библиотека архивирована! Используйте [GTL](https://github.com/GyverLibs/GTL) - она имеет больше возможностей**<br>⚠️⚠️⚠️|
+| --- |
+
 # Stack
 Библиотека для удобной работы с массивами любого типа данных типа std::vector или массивов в js
 - Статическая и динамическая реализация (с реаллокацией)
